@@ -1,7 +1,7 @@
-import config from '../../config/env';
+import config from '@/config/env';
 import streamifier from 'streamifier';
 import { v2 as cloudinary } from 'cloudinary';
-import { generateRandomString } from '../../util/helpers';
+import { generateRandomString } from '@/util/helpers';
 
 cloudinary.config({
 	cloud_name: config.CLOUDINARY_CLOUD_NAME,

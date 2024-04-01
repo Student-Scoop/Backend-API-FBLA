@@ -81,18 +81,11 @@ export const searchValidator = [
 	query('query').exists().isString().withMessage('query cannot be empty')
 ];
 
-export const updateDataValidator = [
-	body('password').optional().isString().withMessage('invalid password'),
-	body(['username', 'newPassword', 'name']).custom((value, { req }) => {
-		const { username, newPassword, name } = req.body;
-
-		if (username || newPassword || name) return true;
-
-		throw new Error('Either username, newPassword, or name is required.');
-	})
-];
-
-const changePortfolioKeys = [
+const updateDataKeys = [
+	'username',
+	'password',
+	'newPassword',
+	'name',
 	'schoolName',
 	'schoolLocation',
 	'graduationYear',
@@ -102,14 +95,15 @@ const changePortfolioKeys = [
 	'sports'
 ];
 
-export const changePortfolioValidator = [
-	body(changePortfolioKeys).custom((value, { req }) => {
+export const updateDataValidator = [
+	body('password').optional().isString().withMessage('invalid password'),
+	body(updateDataKeys).custom((value, { req }) => {
 		const keys = Object.keys(req.body);
-		const isValid = keys.some((key) => changePortfolioKeys.includes(key));
+		const isValid = keys.some((key) => updateDataKeys.includes(key));
 
 		if (!isValid) {
 			throw new Error(
-				`At least one of the following values is needed ${changePortfolioKeys.join(
+				`At least one of the following values is needed ${updateDataKeys.join(
 					', '
 				)}`
 			);
@@ -117,4 +111,12 @@ export const changePortfolioValidator = [
 
 		return true;
 	})
+];
+
+export const updateNotificationIdValidator = [
+	body('notificationId')
+		.exists()
+		.withMessage('notificationId is required')
+		.isString()
+		.withMessage('notificationId must be a string')
 ];

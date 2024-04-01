@@ -10,6 +10,17 @@
 		"skipLibCheck": true,
 		"removeComments": true,
 		"forceConsistentCasingInFileNames": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		},
+		"plugins": [
+			{
+				"transform": "typescript-transform-paths"
+			}
+		]
 	},
 	"include": [
 		"src/**/*"

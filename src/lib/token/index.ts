@@ -1,4 +1,4 @@
-import config from '../../config/env';
+import config from '@/config/env';
 import { V4 as pasteoV4 } from 'paseto';
 import { createPrivateKey } from 'crypto';
 
@@ -31,7 +31,7 @@ export async function createToken(
 	return token;
 }
 
-export async function verifyToken(token: string): Promise<object> {
+export async function verifyToken(token: string): Promise<Token> {
 	const privateKey = config.PRIVATE_SECRET_KEY.replace(/\\n/g, '\n');
 
 	return await pasteoV4.verify(token, privateKey, {

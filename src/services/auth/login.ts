@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { createToken } from '../../lib/token';
-import { ServiceToController, serviceToController } from '../../util/response';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { createToken } from '@/lib/token';
+import { ServiceToController, serviceToController } from '@/util/response';
 
 export const loginEvents = {
 	SUCCESS: 'SUCCESS',
@@ -39,11 +39,18 @@ export default async function loginService(
 		email: user.data.email,
 		username: user.data.username,
 		name: user.data.name,
-		imageUri: user.data.avatar,
+		avatar: user.data.avatar,
 		emailIsVerified: user.data.emailIsVerified,
 		verified: user.data.verified,
-		followers: user.data.followers?.length.toString() || '0',
-		following: user.data.followers?.length.toString() || '0',
+		schoolName: user.data.schoolName,
+		schoolLocation: user.data.schoolLocation,
+		graduationYear: user.data.graduationYear,
+		degree: user.data.degree,
+		major: user.data.major,
+		sports: user.data.sports,
+		clubs: user.data.clubs,
+		followers: user.data.followers.length,
+		following: user.data.followers.length,
 		createdAt: user.data.createdAt,
 		updatedAt: user.data.updatedAt,
 		token: token.data.trim()

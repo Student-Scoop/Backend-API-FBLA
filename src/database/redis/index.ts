@@ -1,5 +1,5 @@
+import config from '@/config/env';
 import { createClient } from 'redis';
-import config from '../../config/env';
 import RedisStore from 'connect-redis';
 
 let redisClient = createClient({

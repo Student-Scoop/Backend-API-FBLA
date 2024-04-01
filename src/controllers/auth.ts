@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import httpStatus from 'http-status';
-import { CreateResponse } from '../util/response';
-import { TypedRequest } from '../types/request';
+import { TypedRequest } from '@/types/request';
+import { CreateResponse } from '@/util/response';
 import {
 	loginService,
 	loginEvents,
@@ -9,7 +9,7 @@ import {
 	signupEvents,
 	googleLoginService,
 	googleLoginEvents
-} from '../services/auth';
+} from '@/services/auth';
 
 export default class AuthController {
 	static async login(
@@ -20,8 +20,6 @@ export default class AuthController {
 		const { event, data } = await loginService(email, password);
 
 		let r = new CreateResponse(res);
-
-		console.log(event, data);
 
 		switch (event) {
 			case loginEvents.SUCCESS:

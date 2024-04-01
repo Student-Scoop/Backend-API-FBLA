@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { createToken } from '../../lib/token';
-import { serviceToController, ServiceToController } from '../../util/response';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { createToken } from '@/lib/token';
+import { serviceToController, ServiceToController } from '@/util/response';
 
 export const signupEvents = {
 	SUCCESS: 'SUCCESS',
@@ -48,11 +48,16 @@ export default async function signupService(
 		email: createdUser.data.email,
 		username: createdUser.data.username,
 		name: createdUser.data.name,
-		imageUri: createdUser.data.avatar,
-		emailIsVerified: createdUser.data.emailIsVerified,
-		verified: createdUser.data.verified,
-		followers: createdUser.data.followers?.length.toString() || '0',
-		following: createdUser.data.followers?.length.toString() || '0',
+		avatar: createdUser.data.avatar,
+		schoolName: createdUser.data.schoolName,
+		schoolLocation: createdUser.data.schoolLocation,
+		graduationYear: createdUser.data.graduationYear,
+		degree: createdUser.data.degree,
+		major: createdUser.data.major,
+		sports: createdUser.data.sports,
+		clubs: createdUser.data.clubs,
+		followers: createdUser.data.followers?.length.toString(),
+		following: createdUser.data.followers?.length.toString(),
 		createdAt: createdUser.data.createdAt,
 		updatedAt: createdUser.data.updatedAt,
 		token: token.data.trim()

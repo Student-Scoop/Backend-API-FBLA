@@ -1,59 +1,85 @@
 import { Response } from 'express';
 import httpStatus from 'http-status';
-import { TypedRequest } from '../types/request';
-import { CreateResponse } from '../util/response';
+import { TypedRequest } from '@/types/request';
+import { CreateResponse } from '@/util/response';
 
 import {
-	changeDataService,
-	changeDataEvents,
+	updateDataService,
+	updateDataEvents,
 	getFollowCountsService,
 	getFollowCountsEvents,
 	getUserService,
 	getUserEvents,
 	updateAvatarService,
 	updateAvatarEvents,
-	getPortfolioService,
-	getPortfolioEvents
-} from '../services/user';
+	updateNotificationIdService,
+	updateNotificationIdEvents
+} from '@/services/user';
 
-interface ChangeDataRequest {
+interface UpdateDataRequest {
 	name: string;
 	username: string;
 	password: string;
 	newPassword: string;
+	schoolName: string;
+	schoolLocation: string;
+	graduationYear: string;
+	degree: string;
+	major: string;
+	sports: string;
+	clubs: string;
 }
 
 export default class UserController {
-	static async changeData(
-		req: TypedRequest<{}, {}, ChangeDataRequest>,
+	static async updateData(
+		req: TypedRequest<{}, {}, UpdateDataRequest>,
 		res: Response
 	) {
 		const { userId } = req.user;
-		const { name, username, password, newPassword } = req.body;
+		const { 
+			name,
+			username, 
+			password, 
+			newPassword,
+			schoolName,
+			schoolLocation,
+			graduationYear,
+			degree,
+			major,
+			sports,
+			clubs
+	 } = req.body;
 
-		const { event, data } = await changeDataService(
+		const { event, data } = await updateDataService(
 			userId,
 			name,
 			username,
 			password,
-			newPassword
+			newPassword,
+			schoolName,
+			schoolLocation,
+			graduationYear,
+			degree,
+			major,
+			sports,
+			clubs
 		);
 
 		let r = new CreateResponse(res);
 
 		switch (event) {
-			case changeDataEvents.SUCCESS:
+			case updateDataEvents.SUCCESS:
 				return r.code(httpStatus.OK).payload(data).send();
-			case changeDataEvents.USER_NOT_FOUND:
+			case updateDataEvents.USER_NOT_FOUND:
 				return r.code(httpStatus.NOT_FOUND).msg('User not found.').send();
-			case changeDataEvents.INVALID_PASSWORD:
+			case updateDataEvents.INVALID_PASSWORD:
 				return r.code(httpStatus.BAD_REQUEST).msg('Invalid password.').send();
-			case changeDataEvents.COULD_NOT_GET_USER:
+			case updateDataEvents.COULD_NOT_GET_USER:
 				return r
 					.code(httpStatus.INTERNAL_SERVER_ERROR)
 					.msg('Could get user.')
 					.send();
-			case changeDataEvents.COULD_NOT_UPDATE_USER:
+			case updateDataEvents.COULD_NOT_UPDATE_USER:
 				return r
 					.code(httpStatus.INTERNAL_SERVER_ERROR)
 					.msg('Could not update user.')
@@ -118,8 +144,6 @@ export default class UserController {
 
 		const { event, data } = await getFollowCountsService(userId);
 
-		console.log('RETURN', event, data);
-
 		let r = new CreateResponse(res);
 
 		switch (event) {
@@ -136,41 +160,6 @@ export default class UserController {
 				return r
 					.code(httpStatus.INTERNAL_SERVER_ERROR)
 					.msg('Could not get followers.')
-					.send();
-			default:
-				return r
-					.code(httpStatus.INTERNAL_SERVER_ERROR)
-					.msg('Unexpected server error.')
-					.send();
-		}
-	}
-
-	static async getPortfolio(
-		req: TypedRequest<{}, { id: string }, {}>,
-		res: Response
-	) {
-		const { userId } = req.user;
-
-		let getUserId: string;
-		if (req.params.id && req.params.id.toLowerCase() === '@me') {
-			getUserId = userId;
-		} else {
-			getUserId = req.params.id;
-		}
-
-		const { event, data } = await getPortfolioService(getUserId);
-
-		let r = new CreateResponse(res);
-
-		switch (event) {
-			case getPortfolioEvents.SUCCESS:
-				return r.code(httpStatus.OK).payload(data).send();
-			case getPortfolioEvents.USER_NOT_FOUND:
-				return r.code(httpStatus.NOT_FOUND).msg('User not found.').send();
-			case getPortfolioEvents.CANT_GET_USER:
-				return r
-					.code(httpStatus.INTERNAL_SERVER_ERROR)
-					.msg('Could not get portfolio.')
 					.send();
 			default:
 				return r
@@ -206,6 +195,43 @@ export default class UserController {
 				return r
 					.code(httpStatus.INTERNAL_SERVER_ERROR)
 					.msg('Could not get user.')
+					.send();
+			default:
+				return r
+					.code(httpStatus.INTERNAL_SERVER_ERROR)
+					.msg('Unexpected server error.')
+					.send();
+		}
+	}
+
+	static async updateNotificationId(
+		req: TypedRequest<{}, {}, { notificationId: string }>,
+		res: Response
+	) {
+		const { userId } = req.user;
+		const { notificationId } = req.body;
+
+		const { event, data } = await updateNotificationIdService(
+			userId,
+			notificationId
+		);
+
+		let r = new CreateResponse(res);
+
+		switch (event) {
+			case updateNotificationIdEvents.SUCCESS:
+				return r.code(httpStatus.OK).payload(data).send();
+			case getUserEvents.USER_NOT_FOUND:
+				return r.code(httpStatus.NOT_FOUND).msg('User not found.').send();
+			case getUserEvents.COULD_NOT_GET_USER:
+				return r
+					.code(httpStatus.INTERNAL_SERVER_ERROR)
+					.msg('Could not get user.')
+					.send();
+			case updateNotificationIdEvents.COULD_NOT_UPDATE_NOTIFICATION_ID:
+				return r
+					.code(httpStatus.INTERNAL_SERVER_ERROR)
+					.msg('Could not update notification id.')
 					.send();
 			default:
 				return r

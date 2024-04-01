@@ -1,6 +1,6 @@
 import v1Routes from './v1';
 import { Router } from 'express';
-import config from '../config/env';
+import config from '@/config/env';
 
 const router = Router();
 

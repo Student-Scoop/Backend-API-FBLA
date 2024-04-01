@@ -1,6 +1,6 @@
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { ServiceToController, serviceToController } from '../../util/response';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { ServiceToController, serviceToController } from '@/util/response';
 
 export const searchUserEvents = {
 	SUCCESS: 'SUCCESS',
@@ -25,6 +25,7 @@ export default async function searchUserService(
 
 	let updatedUsers: Array<{
 		userId: string;
+		name: string;
 		username: string;
 		isFollowed: boolean;
 		avatar: string | null;

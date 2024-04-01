@@ -1,9 +1,9 @@
 import httpStatus from 'http-status';
-import { safe } from '../../lib/errors';
+import { safe } from '@/lib/errors';
+import { TypedRequest } from '@/types/request';
+import { verifyToken, Token } from '@/lib/token';
 import { Response, NextFunction } from 'express';
-import { TypedRequest } from '../../types/request';
-import { CreateResponse } from '../../util/response';
-import { verifyToken, Token } from '../../lib/token';
+import { CreateResponse } from '@/util/response';
 
 export default async function auth(
 	req: TypedRequest<{}, {}, {}>,
@@ -24,8 +24,10 @@ export default async function auth(
 		return r.code(httpStatus.UNAUTHORIZED).msg('Unauthorized.').send();
 
 	const verifiedToken = await safe(verifyToken(authParts[1]));
-	if (verifiedToken.error)
+	if (verifiedToken.error){
+		console.log(verifiedToken.error);
 		return r.code(httpStatus.UNAUTHORIZED).msg('Invalid token.').send();
+	}
 
 	if (!verifiedToken.data)
 		return r.code(httpStatus.UNAUTHORIZED).msg('Unable to use token.').send();

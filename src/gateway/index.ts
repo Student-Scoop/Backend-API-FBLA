@@ -2,7 +2,8 @@ import routes from './routes';
 import { Server } from 'socket.io';
 import { EventEmitter } from 'events';
 import { Server as httpServer } from 'http';
-import { SocketExtended } from '../types/socket';
+import auth from './middleware/security/auth';
+import { SocketExtended } from '@/types/socket';
 
 export default function startWebsocketServer(
 	server: httpServer,
@@ -17,15 +18,14 @@ export default function startWebsocketServer(
 		transports: ['polling', 'websocket']
 	});
 
-	io.on('connection', (socket) => {
-		// skipcq: JS-D008
+	io.use(auth);
 
+	io.on('connection', (socket) => {
 		routes.map((route) => {
 			socket.on(route.name, (data) =>
 				route.controller(io, socket as SocketExtended, data)
 			);
 		});
-		console.log('Connected');
 	});
 
 	return io;

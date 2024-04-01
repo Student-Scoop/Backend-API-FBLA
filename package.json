@@ -7,12 +7,12 @@
 	"private": true,
 	"scripts": {
 		"dev": "nodemon",
-		"build": "rimraf ./build && tsc",
+		"build": "rimraf ./build && tspc",
 		"packages:check": "npmx npm-check-updates",
 		"packages:update": "npx npm-check-updates -u",
-		"migration:generate": "drizzle-kit generate:pg",
-		"migration:start": "ts-node src/database/postgres/migrate",
-		"start": "ts-node --transpile-only ./src/server.ts",
+		"migration:create": "drizzle-kit generate:pg",
+		"migration:start": "ts-node -r tsconfig-paths/register ./src/database/postgres/migrate",
+		"start": "ts-node -r tsconfig-paths/register  --transpile-only ./src/server.ts",
 		"start:prod": "node ./build/server.js",
 		"prettier": "prettier --check \"src/**/*.{ts,tsx,js,jsx}\"",
 		"prettier:fix": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\"",
@@ -48,6 +48,7 @@
 		"sharp": "^0.33.2",
 		"socket.io": "^4.7.4",
 		"streamifier": "^0.1.1",
+		"tsconfig-paths": "^4.2.0",
 		"uuid": "^9.0.1",
 		"validator": "^13.11.0"
 	},
@@ -68,6 +69,8 @@
 		"nodemon": "^3.0.3",
 		"prettier": "^3.2.5",
 		"ts-node": "^10.9.2",
-		"typescript": "latest"
+		"ts-patch": "^3.1.2",
+		"typescript": "latest",
+		"typescript-transform-paths": "^3.4.7"
 	}
 }

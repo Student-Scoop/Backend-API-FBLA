@@ -1,6 +1,7 @@
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { ServiceToController, serviceToController } from '../../util/response';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { sendPushNotifications } from '@/lib/expo';
+import { ServiceToController, serviceToController } from '@/util/response';
 
 export const followEvents = {
 	SUCCESS: 'SUCCESS',
@@ -38,6 +39,14 @@ export default async function followService(
 	}));
 
 	if (userBeingFollowed.error) return serviceToController(followEvents.CANT_FOLLOW_USER);
+
+	sendPushNotifications([
+		{
+			to: userBeingFollowed.data.notificationId,
+			title: 'You have a new follower!',
+			body: `${user.data.username} is now following you! Check out their profile!`,
+		}
+	]);
 
 	return serviceToController(followEvents.SUCCESS, {
 		me: {

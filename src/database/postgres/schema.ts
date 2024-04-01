@@ -1,8 +1,6 @@
 import {
-	integer,
 	pgTable,
 	serial,
-	text,
 	timestamp,
 	varchar,
 	boolean
@@ -20,13 +18,14 @@ export const users = pgTable('users', {
 	avatar: varchar('avatar', { length: 128 }),
 	followers: varchar('followers').array().notNull(),
 	following: varchar('following').array().notNull(),
-	school: varchar('schoolName'),
+	schoolName: varchar('schoolName'),
 	schoolLocation: varchar('schoolLocation'),
 	graduationYear: varchar('graduationYear'),
 	degree: varchar('degree', { length: 64 }),
 	major: varchar('major', { length: 64 }),
 	sports: varchar('sports'),
 	clubs: varchar('clubs'),
+	notificationId: varchar('notificationId'),
 	createdAt: timestamp('createdAt').defaultNow(),
 	updatedAt: timestamp('updatedAt').defaultNow()
 });

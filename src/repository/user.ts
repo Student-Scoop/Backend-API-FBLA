@@ -1,9 +1,8 @@
-import database from '../database/postgres';
-import { users } from '../database/postgres/schema';
+import database from '@/database/postgres';
+import { users } from '@/database/postgres/schema';
 import { InferInsertModel, InferSelectModel, eq, like, or } from 'drizzle-orm';
 
 type InsertUser = InferInsertModel<typeof users>;
-type SelectUser = InferSelectModel<typeof users>;
 
 export default class UserRepo {
 	static async createUser(
@@ -35,7 +34,8 @@ export default class UserRepo {
 		const searchUsers = await database.select({
 			userId: users.userId,
 			username: users.username,
-			avatar: users.avatar
+			avatar: users.avatar,
+			name: users.name
 		}).from(users).where(or(
 			like(users.username, "%"+query+"%"),
 			like(users.name, "%"+query+"%")

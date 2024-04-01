@@ -1,20 +1,20 @@
-import changeDataService, { changeDataEvents } from './changeData';
+import updateDataService, { updateDataEvents } from './updateData';
 import getFollowCountsService, {
 	getFollowCountsEvents
 } from './getFollowCounts';
+import updateNotificationIdService, {updateNotificationIdEvents} from './updateNotificationId';
 import getUserService, { getUserEvents } from './getUser';
 import updateAvatarService, { updateAvatarEvents } from './updateAvatar';
-import getPortfolioService, { getPortfolioEvents } from './getPortfolio';
 
 export {
-	changeDataService,
-	changeDataEvents,
+	updateDataService,
+	updateDataEvents,
 	getFollowCountsService,
 	getFollowCountsEvents,
 	getUserService,
 	getUserEvents,
 	updateAvatarService,
 	updateAvatarEvents,
-	getPortfolioService,
-	getPortfolioEvents
+	updateNotificationIdService,
+	updateNotificationIdEvents
 };

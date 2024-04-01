@@ -1,9 +1,9 @@
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { ServiceToController, serviceToController } from '../../util/response';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { ServiceToController, serviceToController } from '@/util/response';
 
 export const getFollowCountsEvents = {
-	SUCCESS: 'SUCCESS_GET_FOLLOWS',
+	SUCCESS: 'SUCCESS',
 	USER_NOT_FOUND: 'USER_NOT_FOUND',
 	CANT_GET_USER: 'CANT_GET_USER',
 	CANT_GET_FOLLOWERS: 'CANT_GET_FOLLOWERS'

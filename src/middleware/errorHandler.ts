@@ -1,8 +1,8 @@
 import httpStatus from 'http-status';
-import { errors } from '../lib/errors';
-import { TypedRequest } from '../types/request';
+import { errors } from '@/lib/errors';
+import { TypedRequest } from '@/types/request';
 import { Response, NextFunction } from 'express';
-import { CreateResponse } from '../util/response';
+import { CreateResponse } from '@/util/response';
 
 export default function errorHandler(
 	err: Error,

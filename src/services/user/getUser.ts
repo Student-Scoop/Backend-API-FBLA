@@ -1,6 +1,6 @@
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { ServiceToController, serviceToController } from '../../util/response';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { ServiceToController, serviceToController } from '@/util/response';
 
 export const getUserEvents = {
 	SUCCESS: 'SUCCESS',
@@ -25,15 +25,15 @@ export default async function getUserService(
 		emailIsVerified: user.data.emailIsVerified,
 		verified: user.data.verified,
 		name: user.data.name,
-		school: user.data.school,
+		schoolName: user.data.schoolName,
 		schoolLocation: user.data.schoolLocation,
 		graduationYear: user.data.graduationYear,
 		degree: user.data.degree,
 		major: user.data.major,
 		sports: user.data.sports,
 		clubs: user.data.clubs,
-		followersCount: user.data.followers.length,
-		followingCount: user.data.following.length,
+		following: user.data.following.length,
+		followers: user.data.followers.length,
 		createdAt: user.data.createdAt,
 		updatedAt: user.data.updatedAt
 	});

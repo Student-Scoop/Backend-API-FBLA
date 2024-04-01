@@ -1,5 +1,5 @@
 import multer from 'multer';
-import { CustomError, errors } from '../../lib/errors';
+import { CustomError, errors } from '@/lib/errors';
 
 export default function upload(filetypes: string[], sizeLimit: number) {
 	return multer({

@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import httpStatus from 'http-status';
-import { TypedRequest } from '../types/request';
-import { CreateResponse } from '../util/response';
+import { TypedRequest } from '@/types/request';
+import { CreateResponse } from '@/util/response';
 
 import {
 	followService,
@@ -14,7 +14,7 @@ import {
 	getFollowingEvents,
 	searchUserService,
 	searchUserEvents
-} from '../services/relationship';
+} from '@/services/relationship';
 
 export default class RelationshipController {
 	static async follow(
@@ -25,8 +25,6 @@ export default class RelationshipController {
 		const { followId } = req.body;
 
 		const { event, data } = await followService(userId, followId);
-
-		console.log(event, data)
 
 		let r = new CreateResponse(res);
 
@@ -157,13 +155,13 @@ export default class RelationshipController {
 			case searchUserEvents.SUCCESS:
 				return r.code(httpStatus.OK).payload(data).send();
 			case searchUserEvents.NO_RESULTS:
-				return r.code(httpStatus.NOT_FOUND).msg('No results found.').send();
+				return r.code(httpStatus.NO_CONTENT).msg('No results found.').send();
 			case searchUserEvents.CANT_SEARCH:
 				return r.code(httpStatus.INTERNAL_SERVER_ERROR).msg('Unable to search.').send();
 			case getFollowingEvents.CANT_GET_USER:
 				return r.code(httpStatus.INTERNAL_SERVER_ERROR).msg('Cant get user.').send();
 			case getFollowersEvents.USER_NOT_FOUND:
-				return r.code(httpStatus.NOT_FOUND).msg('User not found.').send();
+				return r.code(httpStatus.NO_CONTENT).msg('User not found.').send();
 			default:
 				return r
 					.code(httpStatus.INTERNAL_SERVER_ERROR)

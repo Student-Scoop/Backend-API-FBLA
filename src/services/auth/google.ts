@@ -1,8 +1,8 @@
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { createToken } from '../../lib/token';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { createToken } from '@/lib/token';
 import { OAuth2Client } from 'google-auth-library';
-import { ServiceToController, serviceToController } from '../../util/response';
+import { ServiceToController, serviceToController } from '@/util/response';
 
 const client = new OAuth2Client();
 
@@ -46,11 +46,16 @@ export default async function googleLoginService(
 		email: associatedUser.data.email,
 		username: associatedUser.data.username,
 		name: associatedUser.data.name,
-		imageUri: associatedUser.data.avatar,
-		emailIsVerified: associatedUser.data.emailIsVerified,
-		verified: associatedUser.data.verified,
-		followers: associatedUser.data.followers?.length.toString() || '0',
-		following: associatedUser.data.followers?.length.toString() || '0',
+		avatar: associatedUser.data.avatar,
+		schoolName: associatedUser.data.schoolName,
+		schoolLocation: associatedUser.data.schoolLocation,
+		graduationYear: associatedUser.data.graduationYear,
+		degree: associatedUser.data.degree,
+		major: associatedUser.data.major,
+		sports: associatedUser.data.sports,
+		clubs: associatedUser.data.clubs,
+		followers: associatedUser.data.followers.length,
+		following: associatedUser.data.followers.length,
 		createdAt: associatedUser.data.createdAt,
 		updatedAt: associatedUser.data.updatedAt,
 		token: token.data.trim()

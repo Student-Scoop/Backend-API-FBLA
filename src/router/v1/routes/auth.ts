@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import AuthController from '../../../controllers/auth';
-import { validate } from '../../../middleware/validation/validate';
+import AuthController from '@/controllers/auth';
+import { validate } from '@/middleware/validation/validate';
 
 import {
 	loginValidation,
 	loginWithGoogleValidation,
 	registerValidation
-} from '../../../middleware/validation/rules';
+} from '@/middleware/validation/rules';
 
 const authRouter = Router();
 

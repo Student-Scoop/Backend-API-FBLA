@@ -1,35 +1,36 @@
 import { Router } from 'express';
-import UserController from '../../../controllers/user';
-import upload from '../../../middleware/uploader/upload';
-import { validate } from '../../../middleware/validation/validate';
+import UserController from '@/controllers/user';
+import upload from '@/middleware/uploader/upload';
+import { validate } from '@/middleware/validation/validate';
 
 import {
 	followerFollowingValidator,
-	updateDataValidator
-} from '../../../middleware/validation/rules';
+	updateDataValidator,
+	updateNotificationIdValidator
+} from '@/middleware/validation/rules';
 
 const userRouter = Router();
 
 userRouter.get('/:id', UserController.getUser);
-userRouter.get('/:id/portfolio', UserController.getPortfolio);
 
-userRouter.put(
-	'/settings',
+userRouter.put('/@me/update',
 	updateDataValidator,
 	validate,
-	UserController.changeData
+	UserController.updateData
 );
 
 userRouter.post(
-	'/avatar',
+	'/@me/update-avatar',
 	upload(['image/jpeg', 'image/png', 'image/jpg'], 10).single('image'),
 	UserController.updateAvatar
 );
 
-userRouter.get('/remove-avatar', UserController.removeAvatar);
+userRouter.post('/@me/update-notification-id', updateNotificationIdValidator, validate, UserController.updateNotificationId);
+
+userRouter.get('/@me/remove-avatar', UserController.removeAvatar);
 
 userRouter.get(
-	'/follow-counts',
+	'/@me/follow-counts',
 	followerFollowingValidator,
 	UserController.getFollowCounts
 );

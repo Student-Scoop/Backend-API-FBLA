@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { validate } from '../../../middleware/validation/validate';
-import RelationshipController from '../../../controllers/relationship';
+import { validate } from '@/middleware/validation/validate';
+import RelationshipController from '@/controllers/relationship';
 
 import {
 	followerFollowingValidator,

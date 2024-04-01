@@ -1,6 +1,6 @@
-import { safe } from '../../lib/errors';
-import UserRepo from '../../repository/user';
-import { ServiceToController, serviceToController } from '../../util/response';
+import { safe } from '@/lib/errors';
+import UserRepo from '@/repository/user';
+import { ServiceToController, serviceToController } from '@/util/response';
 
 export const getFollowersEvents = {
 	SUCCESS: 'SUCCESS',
